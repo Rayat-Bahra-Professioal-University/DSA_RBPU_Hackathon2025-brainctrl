@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citycare: Civil Issue Report Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary: #4A6CF7;
+            --secondary: #6A11CB;
+            --accent: #FF6B6B;
+            --success: #2ED573;
+            --warning: #FF9F43;
+            --info: #2E86DE;
+            --light: #F7F9FC;
+            --dark: #2C3E50;
+            --text: #4A5568;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--white);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 160px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hero .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+        }
+
+        .hero .btn-outline {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            color: var(--white);
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            top: -150px;
+            right: -100px;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--warning);
+            bottom: -100px;
+            left: -50px;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: var(--success);
+            top: 50%;
+            right: 10%;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--text);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 50px;
+            position: relative;
+        }
+
+        .search-bar {
+            display: flex;
+            background: var(--white);
+            border-radius: 50px;
+            padding: 10px 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 16px;
+            background: transparent;
+            color: var(--dark);
+        }
+
+        .search-bar button {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(74, 108, 247, 0.4);
+        }
+
+        .search-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: var(--white);
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border-color: transparent;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto 20px;
+            font-size: 28px;
+            color: var(--white);
+        }
+
+        .card-content {
+            padding: 0 25px 30px;
+            text-align: center;
+        }
+
+        .card h3 {
+            font-size: 22px;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        /* Issues Section */
+        .issue-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .issue-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .issue-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .issue-content {
+            padding: 25px;
+        }
+
+        .issue-content h3 {
+            font-size: 20px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .issue-content p {
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .issue-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        /* Form Styles */
+        .form-container {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+            outline: none;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .file-upload {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .file-upload-btn {
+            background: var(--light);
+            border: 1px dashed #ddd;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-btn:hover {
+            background: #f0f0f0;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .contact-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            color: var(--white);
+        }
+
+        .contact-card h3 {
+            font-size: 20px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 80px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+            padding-top: 120px;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Auth Pages */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .auth-card {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header h2 {
+            font-size: 28px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .auth-header p {
+            color: var(--text);
+        }
+
+        .auth-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .auth-form .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .auth-form .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-form .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+            outline: none;
+        }
+
+        .auth-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input {
+            accent-color: var(--primary);
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .auth-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 108, 247, 0.3);
+        }
+
+        .auth-divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .auth-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .auth-divider span {
+            background: var(--white);
+            padding: 0 15px;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .social-auth {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .social-auth-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .social-auth-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .hero .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+                border-radius: 15px;
+                padding: 15px;
+            }
+            
+            .search-bar input {
+                margin-bottom: 10px;
+            }
+            
+            .search-bar button {
+                width: 100%;
+                border-radius: 10px;
+            }
+            
+            .auth-card {
+                padding: 30px 20px;
+            }
+            
+            .social-auth {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-city"></i>
+                    <h1>Citycare</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link active" data-page="home">Home</a>
+                    <a href="#" class="nav-link" data-page="rules">Civic Sense</a>
+                    <a href="#" class="nav-link" data-page="history">History</a>
+                    <a href="#" class="nav-link" data-page="issues">Report Issues</a>
+                    <a href="#" class="nav-link" data-page="complain">Submit Details</a>
+                    <a href="#" class="nav-link" data-page="feedback">Feedback</a>
+                    <a href="#" class="nav-link" data-page="contact">Contact Us</a>
+                </div>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" id="login-btn">Login</button>
+                    <button class="btn btn-primary" id="signup-btn">Sign Up</button>
+                </div>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page / Hero Section -->
+    <section id="home" class="page-section active">
+        <div class="hero">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Make Your City Better, Report Civic Issues</h1>
+                    <p>Citycare is a platform for citizens to report civic issues, track their resolution, and contribute to making our city cleaner, safer, and more beautiful.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" id="hero-report-btn">Report an Issue</button>
+                        <button class="btn btn-outline">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="container">
+            <div class="section-header">
+                <h2>How Citycare Works</h2>
+                <p>Our simple three-step process makes it easy to report issues and track their resolution</p>
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Report Issue</h3>
+                        <p>Easily report civic issues with location, description, and photos using our simple form.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, var(--warning), var(--accent));">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Track Progress</h3>
+                        <p>Monitor the status of your reported issues with real-time updates and notifications.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, var(--success), var(--info));">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Issue Resolved</h3>
+                        <p>Get notified when your reported issue is resolved and verify the solution.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Page -->
+    <section id="login" class="page-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to your Citycare account</p>
+                    </div>
+                    <form class="auth-form" id="login-form">
+                        <div class="form-group">
+                            <label for="login-email">Email Address</label>
+                            <input type="email" class="form-control" id="login-email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" class="form-control" id="login-password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="auth-options">
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember-me">
+                                <label for="remember-me">Remember me</label>
+                            </div>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="auth-button">Sign In</button>
+                    </form>
+                    <div class="auth-divider">
+                        <span>Or continue with</span>
+                    </div>
+                    <div class="social-auth">
+                        <button class="social-auth-btn">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button class="social-auth-btn">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                    </div>
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="#" id="go-to-signup">Sign up</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signup Page -->
+    <section id="signup" class="page-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h2>Create Account</h2>
+                        <p>Join Citycare to start reporting issues</p>
+                    </div>
+                    <form class="auth-form" id="signup-form">
+                        <div class="form-group">
+                            <label for="signup-name">Full Name</label>
+                            <input type="text" class="form-control" id="signup-name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">Email Address</label>
+                            <input type="email" class="form-control" id="signup-email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-phone">Phone Number</label>
+                            <input type="tel" class="form-control" id="signup-phone" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" class="form-control" id="signup-password" placeholder="Create a password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-confirm-password">Confirm Password</label>
+                            <input type="password" class="form-control" id="signup-confirm-password" placeholder="Confirm your password" required>
+                        </div>
+                        <div class="form-group">
+                            <div class="remember-me">
+                                <input type="checkbox" id="terms-agree" required>
+                                <label for="terms-agree">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                            </div>
+                        </div>
+                        <button type="submit" class="auth-button">Create Account</button>
+                    </form>
+                    <div class="auth-divider">
+                        <span>Or continue with</span>
+                    </div>
+                    <div class="social-auth">
+                        <button class="social-auth-btn">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button class="social-auth-btn">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                    </div>
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="#" id="go-to-login">Sign in</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Type of Issues Page -->
+    <section id="issues" class="page-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Common Civic Issues</h2>
+                <p>Report any of these common issues or others that need attention in your area</p>
+            </div>
+            
+            <!-- Search Bar Section -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for specific issues (e.g., potholes, garbage, street lights)...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="search-filters">
+                    <button class="filter-btn active">All Issues</button>
+                    <button class="filter-btn">High Priority</button>
+                    <button class="filter-btn">Recently Reported</button>
+                    <button class="filter-btn">Near Me</button>
+                </div>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="issue-card">
+                    <div class="issue-image" style="background-color: #FF6B6B;"></div>
+                    <div class="issue-content">
+                        <h3>Garbage Dumping</h3>
+                        <p>Report illegal garbage dumping or overflowing bins in your neighborhood.</p>
+                        <button class="btn btn-primary">Report Issue</button>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>245 Reported</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-check-circle"></i>
+                                <span>198 Resolved</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-image" style="background-color: #4A90E2;"></div>
+                    <div class="issue-content">
+                        <h3>Road Damage</h3>
+                        <p>Report potholes, broken roads, or damaged sidewalks in your area.</p>
+                        <button class="btn btn-primary">Report Issue</button>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>189 Reported</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-check-circle"></i>
+                                <span>132 Resolved</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-image" style="background-color: #2ED573;"></div>
+                    <div class="issue-content">
+                        <h3>Street Lighting</h3>
+                        <p>Report non-functional street lights or areas with poor lighting.</p>
+                        <button class="btn btn-primary">Report Issue</button>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>156 Reported</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-check-circle"></i>
+                                <span>121 Resolved</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-image" style="background-color: #FF9F43;"></div>
+                    <div class="issue-content">
+                        <h3>Water Supply Issues</h3>
+                        <p>Report water leakage, low pressure, or contaminated water supply.</p>
+                        <button class="btn btn-primary">Report Issue</button>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>134 Reported</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-check-circle"></i>
+                                <span>98 Resolved</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-image" style="background-color: #2E86DE;"></div>
+                    <div class="issue-content">
+                        <h3>Drainage Problems</h3>
+                        <p>Report blocked drains, waterlogging, or improper drainage systems.</p>
+                        <button class="btn btn-primary">Report Issue</button>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>178 Reported</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-check-circle"></i>
+                                <span>145 Resolved</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-image" style="background-color: #AB47BC;"></div>
+                    <div class="issue-content">
+                        <h3>Public Property Damage</h3>
+                        <p>Report vandalism, damaged public benches, or broken park equipment.</p>
+                        <button class="btn btn-primary">Report Issue</button>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>112 Reported</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-check-circle"></i>
+                                <span>89 Resolved</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-image" style="background-color: #43A047;"></div>
+                    <div class="issue-content">
+                        <h3>Parks & Green Spaces</h3>
+                        <p>Report issues with public parks, playgrounds, or maintenance of green areas.</p>
+                        <button class="btn btn-primary">Report Issue</button>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>95 Reported</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-check-circle"></i>
+                                <span>72 Resolved</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-image" style="background-color: #8D6E63;"></div>
+                    <div class="issue-content">
+                        <h3>Public Transport Issues</h3>
+                        <p>Report problems with bus stops, shelters, or public transport infrastructure.</p>
+                        <button class="btn btn-primary">Report Issue</button>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>167 Reported</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-check-circle"></i>
+                                <span>134 Resolved</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Complain Page -->
+    <section id="complain" class="page-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Submit a Complaint</h2>
+                <p>Help us improve your city by reporting civic issues that need attention</p>
+            </div>
+            <div class="form-container">
+                <form id="complaint-form">
+                    <div class="form-group">
+                        <label for="issue-type">Issue Type</label>
+                        <select class="form-control" id="issue-type" required>
+                            <option value="">Select Issue Type</option>
+                            <option value="garbage">Garbage Dumping</option>
+                            <option value="road">Road Damage</option>
+                            <option value="lighting">Street Lighting</option>
+                            <option value="water">Water Supply</option>
+                            <option value="drainage">Drainage Issues</option>
+                            <option value="parks">Parks & Green Spaces</option>
+                            <option value="transport">Public Transport</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" class="form-control" id="location" placeholder="Enter location or address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Issue Description</label>
+                        <textarea class="form-control" id="description" placeholder="Describe the issue in detail" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Upload Photos (Optional)</label>
+                        <div class="file-upload">
+                            <div class="file-upload-btn">
+                                <i class="fas fa-cloud-upload-alt"></i> Choose Files
+                            </div>
+                            <span>No files chosen</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="priority">Priority Level</label>
+                        <select class="form-control" id="priority" required>
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Submit Complaint</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Page -->
+    <section id="contact" class="page-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+                <p>Get in touch with our team for any questions or support</p>
+            </div>
+            <div class="form-container">
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" class="form-control" id="subject" placeholder="Enter subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea class="form-control" id="message" placeholder="Enter your message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Send Message</button>
+                </form>
+            </div>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-icon" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Our Office</h3>
+                    <p>123 City Center, Downtown</p>
+                    <p>Your City, 12345</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon" style="background: linear-gradient(135deg, var(--warning), var(--accent));">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>Phone Number</h3>
+                    <p>+1 (123) 456-7890</p>
+                    <p>+1 (123) 456-7891</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon" style="background: linear-gradient(135deg, var(--success), var(--info));">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email Address</h3>
+                    <p>info@citycare.com</p>
+                    <p>support@citycare.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Page -->
+    <section id="feedback" class="page-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>We Value Your Feedback</h2>
+                <p>Help us improve our services by sharing your experience with Citycare</p>
+            </div>
+            <div class="form-container">
+                <form id="feedback-form">
+                    <div class="form-group">
+                        <label for="feedback-type">Feedback Type</label>
+                        <select class="form-control" id="feedback-type" required>
+                            <option value="">Select Feedback Type</option>
+                            <option value="suggestion">Suggestion</option>
+                            <option value="complaint">Complaint</option>
+                            <option value="praise">Praise</option>
+                            <option value="bug">Bug Report</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="feedback-message">Your Feedback</label>
+                        <textarea class="form-control" id="feedback-message" placeholder="Please share your feedback in detail" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Overall Rating</label>
+                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            <div class="rating-option">
+                                <input type="radio" id="rating-1" name="rating" value="1">
+                                <label for="rating-1">1</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="rating-2" name="rating" value="2">
+                                <label for="rating-2">2</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="rating-3" name="rating" value="3">
+                                <label for="rating-3">3</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="rating-4" name="rating" value="4">
+                                <label for="rating-4">4</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="rating-5" name="rating" value="5" checked>
+                                <label for="rating-5">5</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Page -->
+    <section id="history" class="page-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Your Reported Issues</h2>
+                <p>Track the status of issues you've reported to Citycare</p>
+            </div>
+            <div class="cards-grid">
+                <div class="issue-card">
+                    <div class="issue-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3>Garbage Dumping</h3>
+                            <span class="status-badge" style="background: var(--success); color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px;">Resolved</span>
+                        </div>
+                        <p><strong>Location:</strong> Main Street, Downtown</p>
+                        <p><strong>Reported:</strong> June 15, 2023</p>
+                        <p><strong>Resolved:</strong> June 18, 2023</p>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <span>3 days to resolve</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3>Road Damage</h3>
+                            <span class="status-badge" style="background: var(--warning); color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px;">In Progress</span>
+                        </div>
+                        <p><strong>Location:</strong> Oak Avenue, Westside</p>
+                        <p><strong>Reported:</strong> June 20, 2023</p>
+                        <p><strong>Estimated Resolution:</strong> June 30, 2023</p>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <span>5 days since reported</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3>Street Lighting</h3>
+                            <span class="status-badge" style="background: var(--info); color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px;">Under Review</span>
+                        </div>
+                        <p><strong>Location:</strong> Elm Street, Northside</p>
+                        <p><strong>Reported:</strong> June 22, 2023</p>
+                        <p><strong>Status:</strong> Awaiting inspection</p>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <span>2 days since reported</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3>Water Supply Issues</h3>
+                            <span class="status-badge" style="background: var(--success); color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px;">Resolved</span>
+                        </div>
+                        <p><strong>Location:</strong> Maple Road, East End</p>
+                        <p><strong>Reported:</strong> June 10, 2023</p>
+                        <p><strong>Resolved:</strong> June 12, 2023</p>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <span>2 days to resolve</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3>Drainage Problems</h3>
+                            <span class="status-badge" style="background: var(--warning); color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px;">In Progress</span>
+                        </div>
+                        <p><strong>Location:</strong> Pine Street, Southside</p>
+                        <p><strong>Reported:</strong> June 18, 2023</p>
+                        <p><strong>Estimated Resolution:</strong> July 5, 2023</p>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <span>7 days since reported</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3>Public Property Damage</h3>
+                            <span class="status-badge" style="background: var(--info); color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px;">Under Review</span>
+                        </div>
+                        <p><strong>Location:</strong> Central Park, City Center</p>
+                        <p><strong>Reported:</strong> June 24, 2023</p>
+                        <p><strong>Status:</strong> Assessment in progress</p>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <span>1 day since reported</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3>Parks & Green Spaces</h3>
+                            <span class="status-badge" style="background: var(--success); color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px;">Resolved</span>
+                        </div>
+                        <p><strong>Location:</strong> Riverside Park</p>
+                        <p><strong>Reported:</strong> June 5, 2023</p>
+                        <p><strong>Resolved:</strong> June 8, 2023</p>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <span>3 days to resolve</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules And Civic Sense Page -->
+    <section id="rules" class="page-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Civic Sense & Community Guidelines</h2>
+                <p>Learn how to be a responsible citizen and contribute to a better community</p>
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Proper Waste Disposal</h3>
+                        <p>Always use designated bins for garbage disposal. Segregate waste into recyclable and non-recyclable categories.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, var(--warning), var(--accent));">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Road Safety</h3>
+                        <p>Follow traffic rules, use pedestrian crossings, and avoid jaywalking. Report damaged roads or missing signage.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, var(--success), var(--info));">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Green Spaces</h3>
+                        <p>Respect public parks and gardens. Avoid plucking flowers or damaging plants. Keep these areas clean.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #AB47BC, #7E57C2);">
+                        <i class="fas fa-volume-mute"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Noise Pollution</h3>
+                        <p>Maintain reasonable noise levels, especially during night hours. Use horns sparingly and avoid loud gatherings in residential areas.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #FFA000, #FFCA28);">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Water Conservation</h3>
+                        <p>Report water leaks promptly. Use water responsibly and avoid wastage. Harvest rainwater where possible.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #43A047, #66BB6A);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Community Participation</h3>
+                        <p>Participate in community clean-up drives and awareness programs. Be an active, responsible citizen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Citycare</h3>
+                    <p>Making our cities better, one issue at a time. Join us in creating cleaner, safer, and more beautiful communities.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Report Issues</a></li>
+                        <li><a href="#">Submit Complaint</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Community Guidelines</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Download App</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 City Center, Downtown</li>
+                        <li><i class="fas fa-phone"></i> +1 (123) 456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@citycare.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Citycare. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation between pages
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pageSections = document.querySelectorAll('.page-section');
+            const loginBtn = document.getElementById('login-btn');
+            const signupBtn = document.getElementById('signup-btn');
+            const goToLogin = document.getElementById('go-to-login');
+            const goToSignup = document.getElementById('go-to-signup');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and sections
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    pageSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Show corresponding section
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            });
+            
+            // Login button functionality
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function() {
+                    // Remove active class from all links and sections
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    pageSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Show login section
+                    document.getElementById('login').classList.add('active');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            }
+            
+            // Signup button functionality
+            if (signupBtn) {
+                signupBtn.addEventListener('click', function() {
+                    // Remove active class from all links and sections
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    pageSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Show signup section
+                    document.getElementById('signup').classList.add('active');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            }
+            
+            // Go to login from signup page
+            if (goToLogin) {
+                goToLogin.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all sections
+                    pageSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Show login section
+                    document.getElementById('login').classList.add('active');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            }
+            
+            // Go to signup from login page
+            if (goToSignup) {
+                goToSignup.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all sections
+                    pageSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Show signup section
+                    document.getElementById('signup').classList.add('active');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            }
+            
+            // Connect the "Report an Issue" button on the home page to the issues section
+            const heroReportBtn = document.getElementById('hero-report-btn');
+            if (heroReportBtn) {
+                heroReportBtn.addEventListener('click', function() {
+                    // Remove active class from all links and sections
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    pageSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Add active class to issues link
+                    document.querySelector('.nav-link[data-page="issues"]').classList.add('active');
+                    
+                    // Show issues section
+                    document.getElementById('issues').classList.add('active');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            }
+            
+            // Search functionality for issues
+            const searchInput = document.querySelector('.search-bar input');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const issueCards = document.querySelectorAll('.issue-card');
+            
+            // Search filter functionality
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    
+                    issueCards.forEach(card => {
+                        const title = card.querySelector('h3').textContent.toLowerCase();
+                        const description = card.querySelector('p').textContent.toLowerCase();
+                        
+                        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // Filter button functionality
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all filter buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // In a real application, you would filter the issues here
+                    // For now, we'll just show all cards
+                    issueCards.forEach(card => {
+                        card.style.display = 'block';
+                    });
+                });
+            });
+            
+            // Form submissions
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // For login and signup forms, simulate successful authentication
+                    if (this.id === 'login-form' || this.id === 'signup-form') {
+                        // Simulate successful login/signup
+                        alert('Authentication successful! Welcome to Citycare.');
+                        
+                        // Update header buttons to show user is logged in
+                        const authButtons = document.querySelector('.auth-buttons');
+                        authButtons.innerHTML = `
+                            <button class="btn btn-outline" id="profile-btn">
+                                <i class="fas fa-user"></i> Profile
+                            </button>
+                            <button class="btn btn-primary" id="logout-btn">Logout</button>
+                        `;
+                        
+                        // Add event listeners to new buttons
+                        document.getElementById('profile-btn').addEventListener('click', function() {
+                            alert('Profile page would open here.');
+                        });
+                        
+                        document.getElementById('logout-btn').addEventListener('click', function() {
+                            alert('You have been logged out.');
+                            // Reset to original buttons
+                            authButtons.innerHTML = `
+                                <button class="btn btn-outline" id="login-btn">Login</button>
+                                <button class="btn btn-primary" id="signup-btn">Sign Up</button>
+                            `;
+                            // Re-attach event listeners
+                            document.getElementById('login-btn').addEventListener('click', loginBtn.click);
+                            document.getElementById('signup-btn').addEventListener('click', signupBtn.click);
+                        });
+                        
+                        // Navigate to home page
+                        navLinks.forEach(nav => nav.classList.remove('active'));
+                        pageSections.forEach(section => section.classList.remove('active'));
+                        document.querySelector('.nav-link[data-page="home"]').classList.add('active');
+                        document.getElementById('home').classList.add('active');
+                    } else {
+                        alert('Thank you for your submission! We will get back to you soon.');
+                    }
+                    
+                    this.reset();
+                });
+            });
+            
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Hero section animation
+            gsap.from('.hero-content h1', {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: 'power3.out'
+            });
+            
+            gsap.from('.hero-content p', {
+                duration: 1,
+                y: 30,
+                opacity: 0,
+                delay: 0.3,
+                ease: 'power3.out'
+            });
+            
+            gsap.from('.hero-buttons', {
+                duration: 1,
+                y: 30,
+                opacity: 0,
+                delay: 0.6,
+                ease: 'power3.out'
+            });
+            
+            // Floating shapes animation
+            gsap.to('.shape-1', {
+                y: 20,
+                rotation: 5,
+                duration: 4,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut'
+            });
+            
+            gsap.to('.shape-2', {
+                y: -15,
+                rotation: -3,
+                duration: 3,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut'
+            });
+            
+            gsap.to('.shape-3', {
+                y: 10,
+                rotation: 2,
+                duration: 5,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut'
+            });
+            
+            // Card animations
+            gsap.utils.toArray('.card, .issue-card').forEach(card => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: 'power3.out'
+                });
+            });
+            
+            // Section header animations
+            gsap.utils.toArray('.section-header').forEach(header => {
+                gsap.from(header, {
+                    scrollTrigger: {
+                        trigger: header,
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    y: 30,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: 'power3.out'
+                });
+            });
+            
+            // Search bar animation
+            gsap.from('.search-container', {
+                scrollTrigger: {
+                    trigger: '.search-container',
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse'
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+            
+            // Auth card animation
+            gsap.from('.auth-card', {
+                duration: 0.8,
+                y: 30,
+                opacity: 0,
+                ease: 'power3.out'
+            });
+        });
+    </script>
+</body>
+</html>
