@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Citycare: Civil Issue Report Portal</title>
+    <title>CityCare - Civic Issue Reporting System</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
@@ -43,42 +43,58 @@
             padding: 0 20px;
         }
 
-        /* Header Styles */
+        /* IMPROVED HEADER STYLES WITH REDUCED PADDING */
         header {
             background-color: var(--white);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             position: fixed;
             width: 100%;
             z-index: 1000;
+            transition: all 0.4s ease;
         }
 
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 8px 0; /* Reduced from 12px */
+            transition: all 0.3s ease;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         .logo i {
             font-size: 28px;
             color: var(--primary);
+            transition: all 0.3s ease;
         }
 
         .logo h1 {
             font-size: 24px;
             font-weight: 700;
             color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Reduced from 30px */
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 8px; /* Reduced from 10px */
+            background: rgba(247, 249, 252, 0.8);
+            border-radius: 50px;
+            padding: 6px; /* Reduced from 8px */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .nav-links a {
@@ -87,45 +103,66 @@
             font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
+            padding: 8px 16px; /* Reduced from 10px 20px */
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 6px; /* Reduced from 8px */
+            font-size: 14px; /* Added to make text smaller */
         }
 
         .nav-links a:hover {
             color: var(--primary);
+            background: rgba(74, 108, 247, 0.1);
+            transform: translateY(-2px);
         }
 
         .nav-links a.active {
-            color: var(--primary);
+            color: var(--white);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
         }
 
-        .nav-links a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 3px;
+        .nav-links a i {
+            font-size: 14px; /* Reduced from 16px */
         }
 
         .auth-buttons {
             display: flex;
-            gap: 15px;
+            gap: 12px; /* Reduced from 15px */
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 8px 16px; /* Reduced from 10px 20px */
             border-radius: 30px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
             font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             color: var(--white);
+            box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
         }
 
         .btn-outline {
@@ -143,6 +180,158 @@
             display: none;
             font-size: 24px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(247, 249, 252, 0.8);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-menu:hover {
+            background: rgba(74, 108, 247, 0.1);
+            color: var(--primary);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: all 0.4s ease;
+            padding: 80px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .mobile-nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            padding: 15px 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mobile-nav-links a:hover {
+            background: rgba(74, 108, 247, 0.1);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .mobile-nav-links a.active {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--white);
+        }
+
+        .mobile-nav-links a i {
+            font-size: 18px;
+            width: 24px;
+        }
+
+        .mobile-auth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-auth-buttons .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        .close-mobile-nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            background: rgba(247, 249, 252, 0.8);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-mobile-nav:hover {
+            background: rgba(74, 108, 247, 0.1);
+            color: var(--primary);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* User Profile */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .user-profile:hover {
+            background: rgba(74, 108, 247, 0.1);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--dark);
         }
 
         /* Hero Section */
@@ -152,6 +341,8 @@
             padding: 160px 0 100px;
             position: relative;
             overflow: hidden;
+            animation: gradientShift 10s ease infinite;
+            background-size: 200% 200%;
         }
 
         .hero-content {
@@ -161,6 +352,8 @@
             text-align: center;
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
@@ -168,12 +361,14 @@
             font-weight: 700;
             margin-bottom: 20px;
             line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .hero p {
             font-size: 18px;
             margin-bottom: 40px;
             max-width: 600px;
+            opacity: 0.9;
         }
 
         .hero-buttons {
@@ -206,6 +401,7 @@
             position: absolute;
             border-radius: 50%;
             opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
         }
 
         .shape-1 {
@@ -214,6 +410,7 @@
             background: var(--accent);
             top: -150px;
             right: -100px;
+            animation-delay: 0s;
         }
 
         .shape-2 {
@@ -222,6 +419,7 @@
             background: var(--warning);
             bottom: -100px;
             left: -50px;
+            animation-delay: 2s;
         }
 
         .shape-3 {
@@ -230,11 +428,13 @@
             background: var(--success);
             top: 50%;
             right: 10%;
+            animation-delay: 4s;
         }
 
         /* Section Styles */
         section {
             padding: 100px 0;
+            transition: all 0.5s ease;
         }
 
         .section-header {
@@ -246,6 +446,20 @@
             font-size: 36px;
             color: var(--dark);
             margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
         }
 
         .section-header p {
@@ -326,6 +540,7 @@
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             color: var(--white);
             border-color: transparent;
+            transform: translateY(-2px);
         }
 
         /* Cards Grid */
@@ -340,7 +555,7 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
         }
 
@@ -359,6 +574,11 @@
             margin: 30px auto 20px;
             font-size: 28px;
             color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .card-content {
@@ -383,7 +603,7 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
         }
 
         .issue-card:hover {
@@ -395,6 +615,13 @@
             height: 200px;
             background-size: cover;
             background-position: center;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .issue-card:hover .issue-image {
+            transform: scale(1.05);
         }
 
         .issue-content {
@@ -436,6 +663,11 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             max-width: 800px;
             margin: 0 auto;
+            transition: all 0.4s ease;
+        }
+
+        .form-container:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
         }
 
         .form-group {
@@ -463,6 +695,7 @@
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
             outline: none;
+            transform: translateY(-2px);
         }
 
         textarea.form-control {
@@ -488,6 +721,155 @@
 
         .file-upload-btn:hover {
             background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 120px 0 50px;
+        }
+
+        .login-form-container {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            max-width: 500px;
+            width: 100%;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-form-container:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            font-size: 28px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: var(--text);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input {
+            width: 16px;
+            height: 16px;
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: var(--accent);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Login Page Animations */
+        .login-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .login-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .login-shape-1 {
+            width: 200px;
+            height: 200px;
+            background: var(--primary);
+            top: -100px;
+            right: -50px;
+            animation-delay: 0s;
+        }
+
+        .login-shape-2 {
+            width: 150px;
+            height: 150px;
+            background: var(--secondary);
+            bottom: -75px;
+            left: -50px;
+            animation-delay: 2s;
+        }
+
+        .login-shape-3 {
+            width: 100px;
+            height: 100px;
+            background: var(--accent);
+            top: 50%;
+            right: 10%;
+            animation-delay: 4s;
+        }
+
+        .login-form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .login-form-container:hover::before {
+            transform: scaleX(1);
         }
 
         /* Contact Section */
@@ -504,7 +886,7 @@
             padding: 30px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
         }
 
         .contact-card:hover {
@@ -522,6 +904,11 @@
             margin: 0 auto 20px;
             font-size: 28px;
             color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover .contact-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .contact-card h3 {
@@ -615,194 +1002,380 @@
         .page-section {
             display: none;
             padding-top: 120px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
         }
 
         .page-section.active {
             display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Auth Pages */
-        .auth-container {
+        /* New Sections for Functionality */
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .status-pending {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .status-in-progress {
+            background-color: var(--info);
+            color: white;
+        }
+
+        .status-resolved {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .action-buttons .btn {
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background-color: var(--accent);
+        }
+
+        .issues-stats {
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 80vh;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
         }
 
-        .auth-card {
+        .stat-card {
             background: var(--white);
             border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            min-width: 180px;
+            transition: all 0.4s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        /* Star Rating System */
+        .star-rating {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+
+        .star {
+            font-size: 30px;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #FFD700;
+            transform: scale(1.2);
+        }
+
+        .rating-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .rating-option input {
+            display: none;
+        }
+
+        .rating-option label {
+            font-size: 14px;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .rating-option input:checked + label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Animated Issue Images */
+        .issue-animation {
+            position: absolute;
             width: 100%;
-            max-width: 450px;
-            padding: 40px;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .garbage-animation {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+        }
+
+        .road-animation {
+            background: linear-gradient(135deg, #4A90E2, #6AA9F4);
+        }
+
+        .lighting-animation {
+            background: linear-gradient(135deg, #2ED573, #4CEB8C);
+        }
+
+        .water-animation {
+            background: linear-gradient(135deg, #FF9F43, #FFB76B);
+        }
+
+        .drainage-animation {
+            background: linear-gradient(135deg, #2E86DE, #4CA0F0);
+        }
+
+        .property-animation {
+            background: linear-gradient(135deg, #AB47BC, #C16BD1);
+        }
+
+        .parks-animation {
+            background: linear-gradient(135deg, #43A047, #5BB85F);
+        }
+
+        .transport-animation {
+            background: linear-gradient(135deg, #8D6E63, #A98C7E);
+        }
+
+        .animation-icon {
+            font-size: 80px;
+            color: white;
+            opacity: 0.8;
+            animation: bounce 2s infinite;
+        }
+
+        .animation-particle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            animation: float 3s infinite ease-in-out;
+        }
+
+        /* Feedback Section Styles */
+        .feedback-importance {
+            margin-bottom: 60px;
+        }
+
+        .feedback-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feedback-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .auth-header {
-            text-align: center;
-            margin-bottom: 30px;
+        .feedback-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
         }
 
-        .auth-header h2 {
-            font-size: 28px;
-            color: var(--dark);
-            margin-bottom: 10px;
-        }
-
-        .auth-header p {
-            color: var(--text);
-        }
-
-        .auth-form .form-group {
-            margin-bottom: 20px;
-        }
-
-        .auth-form .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--dark);
-        }
-
-        .auth-form .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .auth-form .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
-            outline: none;
-        }
-
-        .auth-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .remember-me input {
-            accent-color: var(--primary);
-        }
-
-        .forgot-password {
-            color: var(--primary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
-        .auth-button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
-
-        .auth-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(74, 108, 247, 0.3);
-        }
-
-        .auth-divider {
-            text-align: center;
-            margin: 25px 0;
-            position: relative;
-        }
-
-        .auth-divider::before {
+        .feedback-card::before {
             content: '';
             position: absolute;
-            top: 50%;
+            top: 0;
             left: 0;
             width: 100%;
-            height: 1px;
-            background: #ddd;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
         }
 
-        .auth-divider span {
-            background: var(--white);
-            padding: 0 15px;
-            color: var(--text);
-            font-size: 14px;
-        }
-
-        .social-auth {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .social-auth-btn {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: var(--white);
+        .feedback-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-
-        .social-auth-btn:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .auth-footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        .auth-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
+            margin: 0 auto 25px;
+            font-size: 32px;
+            color: var(--white);
             transition: all 0.3s ease;
         }
 
-        .auth-footer a:hover {
-            text-decoration: underline;
+        .feedback-card:hover .feedback-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feedback-card h3 {
+            font-size: 24px;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .feedback-card p {
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .feedback-divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scaleX(1);
+            }
+            50% {
+                transform: scaleX(1.1);
+            }
+            100% {
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .nav-links {
+                gap: 5px;
+            }
+            
+            .nav-links a {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+        }
+
         @media (max-width: 992px) {
             .nav-links {
                 display: none;
             }
 
+            .auth-buttons {
+                display: none;
+            }
+
             .mobile-menu {
-                display: block;
+                display: flex;
             }
 
             .hero h1 {
@@ -848,12 +1421,50 @@
                 border-radius: 10px;
             }
             
-            .auth-card {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .login-form-container {
                 padding: 30px 20px;
             }
             
-            .social-auth {
-                flex-direction: column;
+            .issues-stats {
+                gap: 15px;
+            }
+            
+            .stat-card {
+                min-width: 140px;
+                padding: 20px 15px;
+            }
+            
+            .stat-number {
+                font-size: 28px;
+            }
+            
+            .star-rating {
+                gap: 5px;
+            }
+            
+            .star {
+                font-size: 24px;
+            }
+            
+            .feedback-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo h1 {
+                font-size: 20px;
+            }
+            
+            .logo i {
+                font-size: 24px;
+            }
+            
+            .mobile-nav {
+                width: 280px;
             }
         }
     </style>
@@ -863,29 +1474,123 @@
     <header>
         <div class="container">
             <nav class="navbar">
-                <div class="logo">
+                <a href="#" class="logo" data-page="home">
                     <i class="fas fa-city"></i>
-                    <h1>Citycare</h1>
-                </div>
-                <div class="nav-links">
-                    <a href="#" class="nav-link active" data-page="home">Home</a>
-                    <a href="#" class="nav-link" data-page="rules">Civic Sense</a>
-                    <a href="#" class="nav-link" data-page="history">History</a>
-                    <a href="#" class="nav-link" data-page="issues">Report Issues</a>
-                    <a href="#" class="nav-link" data-page="complain">Submit Details</a>
-                    <a href="#" class="nav-link" data-page="feedback">Feedback</a>
-                    <a href="#" class="nav-link" data-page="contact">Contact Us</a>
-                </div>
-                <div class="auth-buttons">
-                    <button class="btn btn-outline" id="login-btn">Login</button>
-                    <button class="btn btn-primary" id="signup-btn">Sign Up</button>
-                </div>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
+                    <h1>CityCare</h1>
+                </a>
+                
+                <div class="nav-container">
+                    <div class="nav-links">
+                        <a href="#" class="nav-link active" data-page="home">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                        <a href="#" class="nav-link" data-page="rules">
+                            <i class="fas fa-book"></i>
+                            <span>Civic Sense</span>
+                        </a>
+                        <a href="#" class="nav-link" data-page="history">
+                            <i class="fas fa-history"></i>
+                            <span>History</span>
+                        </a>
+                        <a href="#" class="nav-link" data-page="issues">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Issues</span>
+                        </a>
+                        <a href="#" class="nav-link" data-page="complain">
+                            <i class="fas fa-flag"></i>
+                            <span>Report</span>
+                        </a>
+                        <a href="#" class="nav-link" data-page="track">
+                            <i class="fas fa-tasks"></i>
+                            <span>Track</span>
+                        </a>
+                        <a href="#" class="nav-link" data-page="resolved">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Resolved</span>
+                        </a>
+                        <a href="#" class="nav-link" data-page="feedback">
+                            <i class="fas fa-comment-alt"></i>
+                            <span>Feedback</span>
+                        </a>
+                        <a href="#" class="nav-link" data-page="contact">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>Contact</span>
+                        </a>
+                    </div>
+                    
+                    <div class="auth-buttons">
+                        <button class="btn btn-outline" id="login-btn">Login</button>
+                        <button class="btn btn-primary" id="signup-btn">Sign Up</button>
+                    </div>
+                    
+                    <!-- User profile (visible after login) -->
+                    <div class="user-profile" id="user-profile" style="display: none;">
+                        <div class="user-avatar">U</div>
+                        <div class="user-name">User</div>
+                    </div>
+                    
+                    <div class="mobile-menu" id="mobile-menu">
+                        <i class="fas fa-bars"></i>
+                    </div>
                 </div>
             </nav>
         </div>
     </header>
+    
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobile-nav">
+        <div class="close-mobile-nav" id="close-mobile-nav">
+            <i class="fas fa-times"></i>
+        </div>
+        
+        <div class="mobile-nav-links">
+            <a href="#" class="mobile-nav-link active" data-page="home">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="mobile-nav-link" data-page="rules">
+                <i class="fas fa-book"></i>
+                <span>Civic Sense</span>
+            </a>
+            <a href="#" class="mobile-nav-link" data-page="history">
+                <i class="fas fa-history"></i>
+                <span>History</span>
+            </a>
+            <a href="#" class="mobile-nav-link" data-page="issues">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>Civic Issues</span>
+            </a>
+            <a href="#" class="mobile-nav-link" data-page="complain">
+                <i class="fas fa-flag"></i>
+                <span>Report Issues</span>
+            </a>
+            <a href="#" class="mobile-nav-link" data-page="track">
+                <i class="fas fa-tasks"></i>
+                <span>Track Progress</span>
+            </a>
+            <a href="#" class="mobile-nav-link" data-page="resolved">
+                <i class="fas fa-check-circle"></i>
+                <span>Issues Resolved</span>
+            </a>
+            <a href="#" class="mobile-nav-link" data-page="feedback">
+                <i class="fas fa-comment-alt"></i>
+                <span>Feedback</span>
+            </a>
+            <a href="#" class="mobile-nav-link" data-page="contact">
+                <i class="fas fa-phone-alt"></i>
+                <span>Contact Us</span>
+            </a>
+        </div>
+        
+        <div class="mobile-auth-buttons">
+            <button class="btn btn-primary" id="mobile-signup-btn">Sign Up</button>
+            <button class="btn btn-outline" id="mobile-login-btn">Login</button>
+        </div>
+    </div>
+    
+    <!-- Overlay for mobile navigation -->
+    <div class="overlay" id="overlay"></div>
 
     <!-- Home Page / Hero Section -->
     <section id="home" class="page-section active">
@@ -898,10 +1603,10 @@
             <div class="container">
                 <div class="hero-content">
                     <h1>Make Your City Better, Report Civic Issues</h1>
-                    <p>Citycare is a platform for citizens to report civic issues, track their resolution, and contribute to making our city cleaner, safer, and more beautiful.</p>
+                    <p>CityCare is a platform for citizens to report civic issues, track their resolution, and contribute to making our city cleaner, safer, and more beautiful.</p>
                     <div class="hero-buttons">
                         <button class="btn btn-primary" id="hero-report-btn">Report an Issue</button>
-                        <button class="btn btn-outline">Learn More</button>
+                        <button class="btn btn-outline" id="track-progress-btn">Track Progress</button>
                     </div>
                 </div>
             </div>
@@ -910,7 +1615,7 @@
         <!-- Features Section -->
         <div class="container">
             <div class="section-header">
-                <h2>How Citycare Works</h2>
+                <h2>How CityCare Works</h2>
                 <p>Our simple three-step process makes it easy to report issues and track their resolution</p>
             </div>
             <div class="cards-grid">
@@ -947,102 +1652,65 @@
 
     <!-- Login Page -->
     <section id="login" class="page-section">
-        <div class="container">
-            <div class="auth-container">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <h2>Welcome Back</h2>
-                        <p>Sign in to your Citycare account</p>
+        <div class="login-container">
+            <div class="container">
+                <div class="login-form-container">
+                    <div class="login-animation">
+                        <div class="login-shape login-shape-1"></div>
+                        <div class="login-shape login-shape-2"></div>
+                        <div class="login-shape login-shape-3"></div>
                     </div>
-                    <form class="auth-form" id="login-form">
-                        <div class="form-group">
-                            <label for="login-email">Email Address</label>
-                            <input type="email" class="form-control" id="login-email" placeholder="Enter your email" required>
+                    <div class="login-header">
+                        <h2>Create Your Account</h2>
+                        <p>Join CityCare to start reporting civic issues in your community</p>
+                    </div>
+                    <form id="login-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="full-name">Full Name</label>
+                                <input type="text" class="form-control" id="full-name" placeholder="Enter your full name" required>
+                                <div class="error-message" id="full-name-error">Please enter your full name</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                                <div class="error-message" id="email-error">Please enter a valid email address</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" placeholder="Choose a username" required>
+                                <div class="error-message" id="username-error">Please enter a username</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Create a password" required>
+                                <div class="error-message" id="password-error">Password must be at least 8 characters</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirm-password" placeholder="Confirm your password" required>
+                                <div class="error-message" id="confirm-password-error">Passwords do not match</div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="login-password">Password</label>
-                            <input type="password" class="form-control" id="login-password" placeholder="Enter your password" required>
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
                         </div>
-                        <div class="auth-options">
+                        <div class="form-options">
                             <div class="remember-me">
                                 <input type="checkbox" id="remember-me">
-                                <label for="remember-me">Remember me</label>
+                                <label for="remember-me">Remember Me</label>
                             </div>
-                            <a href="#" class="forgot-password">Forgot password?</a>
+                            <a href="#" class="forgot-password">Forgot Password?</a>
                         </div>
-                        <button type="submit" class="auth-button">Sign In</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Create Account</button>
                     </form>
-                    <div class="auth-divider">
-                        <span>Or continue with</span>
-                    </div>
-                    <div class="social-auth">
-                        <button class="social-auth-btn">
-                            <i class="fab fa-google"></i> Google
-                        </button>
-                        <button class="social-auth-btn">
-                            <i class="fab fa-facebook-f"></i> Facebook
-                        </button>
-                    </div>
-                    <div class="auth-footer">
-                        <p>Don't have an account? <a href="#" id="go-to-signup">Sign up</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Signup Page -->
-    <section id="signup" class="page-section">
-        <div class="container">
-            <div class="auth-container">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <h2>Create Account</h2>
-                        <p>Join Citycare to start reporting issues</p>
-                    </div>
-                    <form class="auth-form" id="signup-form">
-                        <div class="form-group">
-                            <label for="signup-name">Full Name</label>
-                            <input type="text" class="form-control" id="signup-name" placeholder="Enter your full name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-email">Email Address</label>
-                            <input type="email" class="form-control" id="signup-email" placeholder="Enter your email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-phone">Phone Number</label>
-                            <input type="tel" class="form-control" id="signup-phone" placeholder="Enter your phone number" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-password">Password</label>
-                            <input type="password" class="form-control" id="signup-password" placeholder="Create a password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-confirm-password">Confirm Password</label>
-                            <input type="password" class="form-control" id="signup-confirm-password" placeholder="Confirm your password" required>
-                        </div>
-                        <div class="form-group">
-                            <div class="remember-me">
-                                <input type="checkbox" id="terms-agree" required>
-                                <label for="terms-agree">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
-                            </div>
-                        </div>
-                        <button type="submit" class="auth-button">Create Account</button>
-                    </form>
-                    <div class="auth-divider">
-                        <span>Or continue with</span>
-                    </div>
-                    <div class="social-auth">
-                        <button class="social-auth-btn">
-                            <i class="fab fa-google"></i> Google
-                        </button>
-                        <button class="social-auth-btn">
-                            <i class="fab fa-facebook-f"></i> Facebook
-                        </button>
-                    </div>
-                    <div class="auth-footer">
-                        <p>Already have an account? <a href="#" id="go-to-login">Sign in</a></p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1072,11 +1740,18 @@
             
             <div class="cards-grid">
                 <div class="issue-card">
-                    <div class="issue-image" style="background-color: #FF6B6B;"></div>
+                    <div class="issue-image">
+                        <div class="issue-animation garbage-animation">
+                            <i class="fas fa-trash animation-icon"></i>
+                            <div class="animation-particle" style="width: 10px; height: 10px; top: 30%; left: 20%; animation-delay: 0.2s;"></div>
+                            <div class="animation-particle" style="width: 15px; height: 15px; top: 60%; left: 70%; animation-delay: 0.5s;"></div>
+                            <div class="animation-particle" style="width: 8px; height: 8px; top: 40%; left: 50%; animation-delay: 1s;"></div>
+                        </div>
+                    </div>
                     <div class="issue-content">
                         <h3>Garbage Dumping</h3>
                         <p>Report illegal garbage dumping or overflowing bins in your neighborhood.</p>
-                        <button class="btn btn-primary">Report Issue</button>
+                        <button class="btn btn-primary" onclick="navigateToComplain('garbage')">Report Issue</button>
                         <div class="issue-stats">
                             <div class="stat">
                                 <i class="fas fa-exclamation-circle"></i>
@@ -1090,11 +1765,18 @@
                     </div>
                 </div>
                 <div class="issue-card">
-                    <div class="issue-image" style="background-color: #4A90E2;"></div>
+                    <div class="issue-image">
+                        <div class="issue-animation road-animation">
+                            <i class="fas fa-road animation-icon"></i>
+                            <div class="animation-particle" style="width: 12px; height: 12px; top: 20%; left: 30%; animation-delay: 0.3s;"></div>
+                            <div class="animation-particle" style="width: 8px; height: 8px; top: 70%; left: 60%; animation-delay: 0.7s;"></div>
+                            <div class="animation-particle" style="width: 10px; height: 10px; top: 50%; left: 80%; animation-delay: 1.2s;"></div>
+                        </div>
+                    </div>
                     <div class="issue-content">
                         <h3>Road Damage</h3>
                         <p>Report potholes, broken roads, or damaged sidewalks in your area.</p>
-                        <button class="btn btn-primary">Report Issue</button>
+                        <button class="btn btn-primary" onclick="navigateToComplain('road')">Report Issue</button>
                         <div class="issue-stats">
                             <div class="stat">
                                 <i class="fas fa-exclamation-circle"></i>
@@ -1108,11 +1790,18 @@
                     </div>
                 </div>
                 <div class="issue-card">
-                    <div class="issue-image" style="background-color: #2ED573;"></div>
+                    <div class="issue-image">
+                        <div class="issue-animation lighting-animation">
+                            <i class="fas fa-lightbulb animation-icon"></i>
+                            <div class="animation-particle" style="width: 8px; height: 8px; top: 30%; left: 40%; animation-delay: 0.4s;"></div>
+                            <div class="animation-particle" style="width: 12px; height: 12px; top: 60%; left: 20%; animation-delay: 0.8s;"></div>
+                            <div class="animation-particle" style="width: 10px; height: 10px; top: 70%; left: 70%; animation-delay: 1.5s;"></div>
+                        </div>
+                    </div>
                     <div class="issue-content">
                         <h3>Street Lighting</h3>
                         <p>Report non-functional street lights or areas with poor lighting.</p>
-                        <button class="btn btn-primary">Report Issue</button>
+                        <button class="btn btn-primary" onclick="navigateToComplain('lighting')">Report Issue</button>
                         <div class="issue-stats">
                             <div class="stat">
                                 <i class="fas fa-exclamation-circle"></i>
@@ -1126,11 +1815,18 @@
                     </div>
                 </div>
                 <div class="issue-card">
-                    <div class="issue-image" style="background-color: #FF9F43;"></div>
+                    <div class="issue-image">
+                        <div class="issue-animation water-animation">
+                            <i class="fas fa-tint animation-icon"></i>
+                            <div class="animation-particle" style="width: 10px; height: 10px; top: 40%; left: 30%; animation-delay: 0.2s;"></div>
+                            <div class="animation-particle" style="width: 8px; height: 8px; top: 60%; left: 60%; animation-delay: 0.6s;"></div>
+                            <div class="animation-particle" style="width: 12px; height: 12px; top: 30%; left: 70%; animation-delay: 1s;"></div>
+                        </div>
+                    </div>
                     <div class="issue-content">
                         <h3>Water Supply Issues</h3>
                         <p>Report water leakage, low pressure, or contaminated water supply.</p>
-                        <button class="btn btn-primary">Report Issue</button>
+                        <button class="btn btn-primary" onclick="navigateToComplain('water')">Report Issue</button>
                         <div class="issue-stats">
                             <div class="stat">
                                 <i class="fas fa-exclamation-circle"></i>
@@ -1144,11 +1840,18 @@
                     </div>
                 </div>
                 <div class="issue-card">
-                    <div class="issue-image" style="background-color: #2E86DE;"></div>
+                    <div class="issue-image">
+                        <div class="issue-animation drainage-animation">
+                            <i class="fas fa-water animation-icon"></i>
+                            <div class="animation-particle" style="width: 12px; height: 12px; top: 30%; left: 20%; animation-delay: 0.3s;"></div>
+                            <div class="animation-particle" style="width: 10px; height: 10px; top: 60%; left: 50%; animation-delay: 0.7s;"></div>
+                            <div class="animation-particle" style="width: 8px; height: 8px; top: 40%; left: 80%; animation-delay: 1.2s;"></div>
+                        </div>
+                    </div>
                     <div class="issue-content">
                         <h3>Drainage Problems</h3>
                         <p>Report blocked drains, waterlogging, or improper drainage systems.</p>
-                        <button class="btn btn-primary">Report Issue</button>
+                        <button class="btn btn-primary" onclick="navigateToComplain('drainage')">Report Issue</button>
                         <div class="issue-stats">
                             <div class="stat">
                                 <i class="fas fa-exclamation-circle"></i>
@@ -1162,11 +1865,18 @@
                     </div>
                 </div>
                 <div class="issue-card">
-                    <div class="issue-image" style="background-color: #AB47BC;"></div>
+                    <div class="issue-image">
+                        <div class="issue-animation property-animation">
+                            <i class="fas fa-hammer animation-icon"></i>
+                            <div class="animation-particle" style="width: 10px; height: 10px; top: 40%; left: 30%; animation-delay: 0.4s;"></div>
+                            <div class="animation-particle" style="width: 8px; height: 8px; top: 60%; left: 60%; animation-delay: 0.8s;"></div>
+                            <div class="animation-particle" style="width: 12px; height: 12px; top: 30%; left: 70%; animation-delay: 1.3s;"></div>
+                        </div>
+                    </div>
                     <div class="issue-content">
                         <h3>Public Property Damage</h3>
                         <p>Report vandalism, damaged public benches, or broken park equipment.</p>
-                        <button class="btn btn-primary">Report Issue</button>
+                        <button class="btn btn-primary" onclick="navigateToComplain('property')">Report Issue</button>
                         <div class="issue-stats">
                             <div class="stat">
                                 <i class="fas fa-exclamation-circle"></i>
@@ -1180,11 +1890,18 @@
                     </div>
                 </div>
                 <div class="issue-card">
-                    <div class="issue-image" style="background-color: #43A047;"></div>
+                    <div class="issue-image">
+                        <div class="issue-animation parks-animation">
+                            <i class="fas fa-tree animation-icon"></i>
+                            <div class="animation-particle" style="width: 8px; height: 8px; top: 30%; left: 40%; animation-delay: 0.2s;"></div>
+                            <div class="animation-particle" style="width: 12px; height: 12px; top: 60%; left: 20%; animation-delay: 0.6s;"></div>
+                            <div class="animation-particle" style="width: 10px; height: 10px; top: 70%; left: 70%; animation-delay: 1s;"></div>
+                        </div>
+                    </div>
                     <div class="issue-content">
                         <h3>Parks & Green Spaces</h3>
                         <p>Report issues with public parks, playgrounds, or maintenance of green areas.</p>
-                        <button class="btn btn-primary">Report Issue</button>
+                        <button class="btn btn-primary" onclick="navigateToComplain('parks')">Report Issue</button>
                         <div class="issue-stats">
                             <div class="stat">
                                 <i class="fas fa-exclamation-circle"></i>
@@ -1198,11 +1915,18 @@
                     </div>
                 </div>
                 <div class="issue-card">
-                    <div class="issue-image" style="background-color: #8D6E63;"></div>
+                    <div class="issue-image">
+                        <div class="issue-animation transport-animation">
+                            <i class="fas fa-bus animation-icon"></i>
+                            <div class="animation-particle" style="width: 10px; height: 10px; top: 40%; left: 30%; animation-delay: 0.3s;"></div>
+                            <div class="animation-particle" style="width: 8px; height: 8px; top: 60%; left: 60%; animation-delay: 0.7s;"></div>
+                            <div class="animation-particle" style="width: 12px; height: 12px; top: 30%; left: 70%; animation-delay: 1.2s;"></div>
+                        </div>
+                    </div>
                     <div class="issue-content">
                         <h3>Public Transport Issues</h3>
                         <p>Report problems with bus stops, shelters, or public transport infrastructure.</p>
-                        <button class="btn btn-primary">Report Issue</button>
+                        <button class="btn btn-primary" onclick="navigateToComplain('transport')">Report Issue</button>
                         <div class="issue-stats">
                             <div class="stat">
                                 <i class="fas fa-exclamation-circle"></i>
@@ -1274,6 +1998,72 @@
         </div>
     </section>
 
+    <!-- Track Progress Page -->
+    <section id="track" class="page-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Track Issue Progress</h2>
+                <p>Monitor the status of issues you've reported to CityCare</p>
+            </div>
+            
+            <div class="issues-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-issues">0</div>
+                    <div class="stat-label">Total Issues</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pending-issues">0</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="in-progress-issues">0</div>
+                    <div class="stat-label">In Progress</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="resolved-issues">0</div>
+                    <div class="stat-label">Resolved</div>
+                </div>
+            </div>
+            
+            <div class="cards-grid" id="track-issues-container">
+                <!-- Issues will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Issues Resolved Page -->
+    <section id="resolved" class="page-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Resolved Issues</h2>
+                <p>View all successfully resolved civic issues in your community</p>
+            </div>
+            
+            <div class="issues-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-resolved">0</div>
+                    <div class="stat-label">Total Resolved</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="avg-resolution-time">0</div>
+                    <div class="stat-label">Avg. Resolution (days)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="this-month-resolved">0</div>
+                    <div class="stat-label">Resolved This Month</div>
+                </div>
+            </div>
+            
+            <div class="cards-grid" id="resolved-issues-container">
+                <!-- Resolved issues will be dynamically loaded here -->
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn btn-primary" id="view-all-resolved">View All Resolved Issues</button>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Us Page -->
     <section id="contact" class="page-section">
         <div class="container">
@@ -1336,8 +2126,42 @@
         <div class="container">
             <div class="section-header">
                 <h2>We Value Your Feedback</h2>
-                <p>Help us improve our services by sharing your experience with Citycare</p>
+                <p>Help us improve our services by sharing your experience with CityCare</p>
             </div>
+            
+            <!-- Feedback Importance Section -->
+            <div class="feedback-importance">
+                <div class="feedback-cards">
+                    <div class="feedback-card">
+                        <div class="feedback-icon" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Improve Services</h3>
+                        <div class="feedback-divider"></div>
+                        <p>Your feedback helps us enhance our services and response times, ensuring we address civic issues more efficiently and effectively.</p>
+                    </div>
+                    
+                    <div class="feedback-card">
+                        <div class="feedback-icon" style="background: linear-gradient(135deg, var(--success), var(--info));">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Community Impact</h3>
+                        <div class="feedback-divider"></div>
+                        <p>Collective feedback drives positive changes for the entire community, helping us prioritize issues that matter most to residents.</p>
+                    </div>
+                    
+                    <div class="feedback-card">
+                        <div class="feedback-icon" style="background: linear-gradient(135deg, var(--warning), var(--accent));">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Innovation</h3>
+                        <div class="feedback-divider"></div>
+                        <p>Your suggestions inspire new features and improvements, helping us innovate and provide better solutions for urban challenges.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Feedback Form -->
             <div class="form-container">
                 <form id="feedback-form">
                     <div class="form-group">
@@ -1357,28 +2181,14 @@
                     </div>
                     <div class="form-group">
                         <label for="rating">Overall Rating</label>
-                        <div style="display: flex; gap: 10px; margin-top: 10px;">
-                            <div class="rating-option">
-                                <input type="radio" id="rating-1" name="rating" value="1">
-                                <label for="rating-1">1</label>
-                            </div>
-                            <div class="rating-option">
-                                <input type="radio" id="rating-2" name="rating" value="2">
-                                <label for="rating-2">2</label>
-                            </div>
-                            <div class="rating-option">
-                                <input type="radio" id="rating-3" name="rating" value="3">
-                                <label for="rating-3">3</label>
-                            </div>
-                            <div class="rating-option">
-                                <input type="radio" id="rating-4" name="rating" value="4">
-                                <label for="rating-4">4</label>
-                            </div>
-                            <div class="rating-option">
-                                <input type="radio" id="rating-5" name="rating" value="5" checked>
-                                <label for="rating-5">5</label>
-                            </div>
+                        <div class="star-rating" id="star-rating">
+                            <span class="star" data-rating="1">★</span>
+                            <span class="star" data-rating="2">★</span>
+                            <span class="star" data-rating="3">★</span>
+                            <span class="star" data-rating="4">★</span>
+                            <span class="star" data-rating="5">★</span>
                         </div>
+                        <input type="hidden" id="rating-value" name="rating" value="0">
                     </div>
                     <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Submit Feedback</button>
                 </form>
@@ -1391,7 +2201,7 @@
         <div class="container">
             <div class="section-header">
                 <h2>Your Reported Issues</h2>
-                <p>Track the status of issues you've reported to Citycare</p>
+                <p>Track the status of issues you've reported to CityCare</p>
             </div>
             <div class="cards-grid">
                 <div class="issue-card">
@@ -1588,7 +2398,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
-                    <h3>Citycare</h3>
+                    <h3>CityCare</h3>
                     <p>Making our cities better, one issue at a time. Join us in creating cleaner, safer, and more beautiful communities.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -1627,28 +2437,36 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 Citycare. All rights reserved.</p>
+                <p>&copy; 2023 CityCare. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Issue reported successfully!</span>
+    </div>
+
     <script>
         // Page Navigation
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize localStorage with sample data if empty
+            initializeIssuesData();
+            
             // Navigation between pages
-            const navLinks = document.querySelectorAll('.nav-link');
+            const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
             const pageSections = document.querySelectorAll('.page-section');
-            const loginBtn = document.getElementById('login-btn');
-            const signupBtn = document.getElementById('signup-btn');
-            const goToLogin = document.getElementById('go-to-login');
-            const goToSignup = document.getElementById('go-to-signup');
             
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     
+                    // Close mobile navigation if open
+                    closeMobileNav();
+                    
                     // Remove active class from all links and sections
-                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(nav => nav.classList.remove('active'));
                     pageSections.forEach(section => section.classList.remove('active'));
                     
                     // Add active class to clicked link
@@ -1658,67 +2476,98 @@
                     const pageId = this.getAttribute('data-page');
                     document.getElementById(pageId).classList.add('active');
                     
+                    // If navigating to track or resolved pages, load the data
+                    if (pageId === 'track') {
+                        loadTrackProgressData();
+                    } else if (pageId === 'resolved') {
+                        loadResolvedIssuesData();
+                    }
+                    
                     // Scroll to top
                     window.scrollTo(0, 0);
                 });
             });
             
-            // Login button functionality
-            if (loginBtn) {
-                loginBtn.addEventListener('click', function() {
+            // Logo navigation
+            const logo = document.querySelector('.logo');
+            logo.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Close mobile navigation if open
+                closeMobileNav();
+                
+                // Remove active class from all links and sections
+                document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(nav => nav.classList.remove('active'));
+                pageSections.forEach(section => section.classList.remove('active'));
+                
+                // Add active class to home link
+                document.querySelector('.nav-link[data-page="home"]').classList.add('active');
+                document.querySelector('.mobile-nav-link[data-page="home"]').classList.add('active');
+                
+                // Show home section
+                document.getElementById('home').classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+            
+            // Mobile menu functionality
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileNav = document.getElementById('mobile-nav');
+            const closeMobileNavBtn = document.getElementById('close-mobile-nav');
+            const overlay = document.getElementById('overlay');
+            
+            mobileMenu.addEventListener('click', function() {
+                mobileNav.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            closeMobileNavBtn.addEventListener('click', closeMobileNav);
+            overlay.addEventListener('click', closeMobileNav);
+            
+            function closeMobileNav() {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+            
+            // Mobile auth buttons
+            const mobileLoginBtn = document.getElementById('mobile-login-btn');
+            const mobileSignupBtn = document.getElementById('mobile-signup-btn');
+            
+            if (mobileLoginBtn) {
+                mobileLoginBtn.addEventListener('click', function() {
+                    closeMobileNav();
+                    
                     // Remove active class from all links and sections
-                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(nav => nav.classList.remove('active'));
                     pageSections.forEach(section => section.classList.remove('active'));
                     
                     // Show login section
                     document.getElementById('login').classList.add('active');
                     
+                    // Animate login form elements
+                    animateLoginForm();
+                    
                     // Scroll to top
                     window.scrollTo(0, 0);
                 });
             }
             
-            // Signup button functionality
-            if (signupBtn) {
-                signupBtn.addEventListener('click', function() {
+            if (mobileSignupBtn) {
+                mobileSignupBtn.addEventListener('click', function() {
+                    closeMobileNav();
+                    
                     // Remove active class from all links and sections
-                    navLinks.forEach(nav => nav.classList.remove('active'));
-                    pageSections.forEach(section => section.classList.remove('active'));
-                    
-                    // Show signup section
-                    document.getElementById('signup').classList.add('active');
-                    
-                    // Scroll to top
-                    window.scrollTo(0, 0);
-                });
-            }
-            
-            // Go to login from signup page
-            if (goToLogin) {
-                goToLogin.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Remove active class from all sections
+                    document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(nav => nav.classList.remove('active'));
                     pageSections.forEach(section => section.classList.remove('active'));
                     
                     // Show login section
                     document.getElementById('login').classList.add('active');
                     
-                    // Scroll to top
-                    window.scrollTo(0, 0);
-                });
-            }
-            
-            // Go to signup from login page
-            if (goToSignup) {
-                goToSignup.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Remove active class from all sections
-                    pageSections.forEach(section => section.classList.remove('active'));
-                    
-                    // Show signup section
-                    document.getElementById('signup').classList.add('active');
+                    // Animate login form elements
+                    animateLoginForm();
                     
                     // Scroll to top
                     window.scrollTo(0, 0);
@@ -1730,17 +2579,218 @@
             if (heroReportBtn) {
                 heroReportBtn.addEventListener('click', function() {
                     // Remove active class from all links and sections
-                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(nav => nav.classList.remove('active'));
                     pageSections.forEach(section => section.classList.remove('active'));
                     
                     // Add active class to issues link
                     document.querySelector('.nav-link[data-page="issues"]').classList.add('active');
+                    document.querySelector('.mobile-nav-link[data-page="issues"]').classList.add('active');
                     
                     // Show issues section
                     document.getElementById('issues').classList.add('active');
                     
                     // Scroll to top
                     window.scrollTo(0, 0);
+                });
+            }
+            
+            // Connect the "Track Progress" button on the home page
+            const trackProgressBtn = document.getElementById('track-progress-btn');
+            if (trackProgressBtn) {
+                trackProgressBtn.addEventListener('click', function() {
+                    // Remove active class from all links and sections
+                    document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(nav => nav.classList.remove('active'));
+                    pageSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Add active class to track link
+                    document.querySelector('.nav-link[data-page="track"]').classList.add('active');
+                    document.querySelector('.mobile-nav-link[data-page="track"]').classList.add('active');
+                    
+                    // Show track section
+                    document.getElementById('track').classList.add('active');
+                    
+                    // Load track data
+                    loadTrackProgressData();
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            }
+            
+            // Login and Sign Up buttons in header
+            const loginBtn = document.getElementById('login-btn');
+            const signupBtn = document.getElementById('signup-btn');
+            
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function() {
+                    // Remove active class from all links and sections
+                    document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(nav => nav.classList.remove('active'));
+                    pageSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Show login section
+                    document.getElementById('login').classList.add('active');
+                    
+                    // Animate login form elements
+                    animateLoginForm();
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            }
+            
+            if (signupBtn) {
+                signupBtn.addEventListener('click', function() {
+                    // Remove active class from all links and sections
+                    document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(nav => nav.classList.remove('active'));
+                    pageSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Show login section
+                    document.getElementById('login').classList.add('active');
+                    
+                    // Animate login form elements
+                    animateLoginForm();
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            }
+            
+            // Login form validation
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const fullName = document.getElementById('full-name').value;
+                    const email = document.getElementById('email').value;
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    const confirmPassword = document.getElementById('confirm-password').value;
+                    
+                    // Reset error messages
+                    document.querySelectorAll('.error-message').forEach(error => {
+                        error.style.display = 'none';
+                    });
+                    
+                    let isValid = true;
+                    
+                    // Validate full name
+                    if (fullName.trim() === '') {
+                        document.getElementById('full-name-error').style.display = 'block';
+                        isValid = false;
+                    }
+                    
+                    // Validate email
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email)) {
+                        document.getElementById('email-error').style.display = 'block';
+                        isValid = false;
+                    }
+                    
+                    // Validate username
+                    if (username.trim() === '') {
+                        document.getElementById('username-error').style.display = 'block';
+                        isValid = false;
+                    }
+                    
+                    // Validate password
+                    if (password.length < 8) {
+                        document.getElementById('password-error').style.display = 'block';
+                        isValid = false;
+                    }
+                    
+                    // Validate confirm password
+                    if (password !== confirmPassword) {
+                        document.getElementById('confirm-password-error').style.display = 'block';
+                        isValid = false;
+                    }
+                    
+                    // If form is valid, redirect to home page
+                    if (isValid) {
+                        showToast('Account created successfully!');
+                        
+                        // Remove active class from all links and sections
+                        document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(nav => nav.classList.remove('active'));
+                        pageSections.forEach(section => section.classList.remove('active'));
+                        
+                        // Add active class to home link
+                        document.querySelector('.nav-link[data-page="home"]').classList.add('active');
+                        document.querySelector('.mobile-nav-link[data-page="home"]').classList.add('active');
+                        
+                        // Show home section
+                        document.getElementById('home').classList.add('active');
+                        
+                        // Scroll to top
+                        window.scrollTo(0, 0);
+                    }
+                });
+            }
+            
+            // Complaint form submission
+            const complaintForm = document.getElementById('complaint-form');
+            if (complaintForm) {
+                complaintForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const issueType = document.getElementById('issue-type').value;
+                    const location = document.getElementById('location').value;
+                    const description = document.getElementById('description').value;
+                    const priority = document.getElementById('priority').value;
+                    
+                    // Validate required fields
+                    if (!issueType || !location || !description) {
+                        showToast('Please fill in all required fields', true);
+                        return;
+                    }
+                    
+                    // Create new issue object
+                    const newIssue = {
+                        id: generateIssueId(),
+                        type: issueType,
+                        location: location,
+                        description: description,
+                        priority: priority,
+                        status: 'pending',
+                        dateReported: new Date().toISOString(),
+                        dateResolved: null
+                    };
+                    
+                    // Save to localStorage
+                    saveIssue(newIssue);
+                    
+                    // Show success message
+                    showToast('Issue reported successfully!');
+                    
+                    // Clear form
+                    complaintForm.reset();
+                    
+                    // Navigate to track progress page
+                    setTimeout(() => {
+                        // Remove active class from all links and sections
+                        document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(nav => nav.classList.remove('active'));
+                        pageSections.forEach(section => section.classList.remove('active'));
+                        
+                        // Add active class to track link
+                        document.querySelector('.nav-link[data-page="track"]').classList.add('active');
+                        document.querySelector('.mobile-nav-link[data-page="track"]').classList.add('active');
+                        
+                        // Show track section
+                        document.getElementById('track').classList.add('active');
+                        
+                        // Load track data
+                        loadTrackProgressData();
+                    }, 1500);
+                });
+            }
+            
+            // View All Resolved button
+            const viewAllResolvedBtn = document.getElementById('view-all-resolved');
+            if (viewAllResolvedBtn) {
+                viewAllResolvedBtn.addEventListener('click', function() {
+                    // In a real app, this would load more data or show a modal with all resolved issues
+                    showToast('Loading all resolved issues...');
                 });
             }
             
@@ -1787,50 +2837,57 @@
             // Form submissions
             const forms = document.querySelectorAll('form');
             forms.forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
+                if (form.id !== 'login-form' && form.id !== 'complaint-form') {
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        showToast('Thank you for your submission! We will get back to you soon.');
+                        this.reset();
+                    });
+                }
+            });
+            
+            // Star Rating System
+            const stars = document.querySelectorAll('.star');
+            const ratingValue = document.getElementById('rating-value');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-rating');
+                    ratingValue.value = rating;
                     
-                    // For login and signup forms, simulate successful authentication
-                    if (this.id === 'login-form' || this.id === 'signup-form') {
-                        // Simulate successful login/signup
-                        alert('Authentication successful! Welcome to Citycare.');
-                        
-                        // Update header buttons to show user is logged in
-                        const authButtons = document.querySelector('.auth-buttons');
-                        authButtons.innerHTML = `
-                            <button class="btn btn-outline" id="profile-btn">
-                                <i class="fas fa-user"></i> Profile
-                            </button>
-                            <button class="btn btn-primary" id="logout-btn">Logout</button>
-                        `;
-                        
-                        // Add event listeners to new buttons
-                        document.getElementById('profile-btn').addEventListener('click', function() {
-                            alert('Profile page would open here.');
-                        });
-                        
-                        document.getElementById('logout-btn').addEventListener('click', function() {
-                            alert('You have been logged out.');
-                            // Reset to original buttons
-                            authButtons.innerHTML = `
-                                <button class="btn btn-outline" id="login-btn">Login</button>
-                                <button class="btn btn-primary" id="signup-btn">Sign Up</button>
-                            `;
-                            // Re-attach event listeners
-                            document.getElementById('login-btn').addEventListener('click', loginBtn.click);
-                            document.getElementById('signup-btn').addEventListener('click', signupBtn.click);
-                        });
-                        
-                        // Navigate to home page
-                        navLinks.forEach(nav => nav.classList.remove('active'));
-                        pageSections.forEach(section => section.classList.remove('active'));
-                        document.querySelector('.nav-link[data-page="home"]').classList.add('active');
-                        document.getElementById('home').classList.add('active');
-                    } else {
-                        alert('Thank you for your submission! We will get back to you soon.');
-                    }
+                    // Update star appearance
+                    stars.forEach(s => {
+                        if (s.getAttribute('data-rating') <= rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+                
+                // Hover effect
+                star.addEventListener('mouseover', function() {
+                    const rating = this.getAttribute('data-rating');
                     
-                    this.reset();
+                    stars.forEach(s => {
+                        if (s.getAttribute('data-rating') <= rating) {
+                            s.style.color = '#FFD700';
+                        } else {
+                            s.style.color = '#ddd';
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseout', function() {
+                    const currentRating = ratingValue.value;
+                    
+                    stars.forEach(s => {
+                        if (s.getAttribute('data-rating') <= currentRating) {
+                            s.style.color = '#FFD700';
+                        } else {
+                            s.style.color = '#ddd';
+                        }
+                    });
                 });
             });
             
@@ -1890,7 +2947,7 @@
             });
             
             // Card animations
-            gsap.utils.toArray('.card, .issue-card').forEach(card => {
+            gsap.utils.toArray('.card, .issue-card, .feedback-card').forEach(card => {
                 gsap.from(card, {
                     scrollTrigger: {
                         trigger: card,
@@ -1934,15 +2991,339 @@
                 duration: 0.8,
                 ease: 'power3.out'
             });
-            
-            // Auth card animation
-            gsap.from('.auth-card', {
-                duration: 0.8,
-                y: 30,
-                opacity: 0,
-                ease: 'power3.out'
-            });
         });
+        
+        // Function to animate login form elements
+        function animateLoginForm() {
+            const loginForm = document.getElementById('login-form');
+            const formElements = loginForm.querySelectorAll('.form-group, .form-options, button');
+            
+            // Reset animations
+            formElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+            });
+            
+            // Animate elements with delay
+            formElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.transition = 'all 0.5s ease';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+        
+        // Function to initialize sample issues data if localStorage is empty
+        function initializeIssuesData() {
+            if (!localStorage.getItem('citycare-issues')) {
+                const sampleIssues = [
+                    {
+                        id: 'ISS-001',
+                        type: 'garbage',
+                        location: 'Main Street, Downtown',
+                        description: 'Overflowing garbage bins near the shopping center',
+                        priority: 'high',
+                        status: 'resolved',
+                        dateReported: '2023-06-15T10:30:00Z',
+                        dateResolved: '2023-06-18T14:20:00Z'
+                    },
+                    {
+                        id: 'ISS-002',
+                        type: 'road',
+                        location: 'Oak Avenue, Westside',
+                        description: 'Large pothole causing traffic issues',
+                        priority: 'medium',
+                        status: 'in-progress',
+                        dateReported: '2023-06-20T08:15:00Z',
+                        dateResolved: null
+                    },
+                    {
+                        id: 'ISS-003',
+                        type: 'lighting',
+                        location: 'Elm Street, Northside',
+                        description: 'Street light not working for past 3 days',
+                        priority: 'medium',
+                        status: 'pending',
+                        dateReported: '2023-06-22T19:45:00Z',
+                        dateResolved: null
+                    },
+                    {
+                        id: 'ISS-004',
+                        type: 'water',
+                        location: 'Maple Road, East End',
+                        description: 'Water leakage from main pipeline',
+                        priority: 'urgent',
+                        status: 'resolved',
+                        dateReported: '2023-06-10T07:20:00Z',
+                        dateResolved: '2023-06-12T16:10:00Z'
+                    }
+                ];
+                localStorage.setItem('citycare-issues', JSON.stringify(sampleIssues));
+            }
+        }
+        
+        // Function to generate a unique issue ID
+        function generateIssueId() {
+            const issues = getIssues();
+            const lastId = issues.length > 0 ? 
+                parseInt(issues[issues.length - 1].id.split('-')[1]) : 0;
+            return `ISS-${String(lastId + 1).padStart(3, '0')}`;
+        }
+        
+        // Function to get all issues from localStorage
+        function getIssues() {
+            return JSON.parse(localStorage.getItem('citycare-issues') || '[]');
+        }
+        
+        // Function to save a new issue to localStorage
+        function saveIssue(issue) {
+            const issues = getIssues();
+            issues.push(issue);
+            localStorage.setItem('citycare-issues', JSON.stringify(issues));
+        }
+        
+        // Function to update an issue in localStorage
+        function updateIssue(issueId, updates) {
+            const issues = getIssues();
+            const issueIndex = issues.findIndex(issue => issue.id === issueId);
+            if (issueIndex !== -1) {
+                issues[issueIndex] = { ...issues[issueIndex], ...updates };
+                localStorage.setItem('citycare-issues', JSON.stringify(issues));
+                return true;
+            }
+            return false;
+        }
+        
+        // Function to load track progress data
+        function loadTrackProgressData() {
+            const issues = getIssues();
+            const container = document.getElementById('track-issues-container');
+            
+            // Update statistics
+            const totalIssues = issues.length;
+            const pendingIssues = issues.filter(issue => issue.status === 'pending').length;
+            const inProgressIssues = issues.filter(issue => issue.status === 'in-progress').length;
+            const resolvedIssues = issues.filter(issue => issue.status === 'resolved').length;
+            
+            document.getElementById('total-issues').textContent = totalIssues;
+            document.getElementById('pending-issues').textContent = pendingIssues;
+            document.getElementById('in-progress-issues').textContent = inProgressIssues;
+            document.getElementById('resolved-issues').textContent = resolvedIssues;
+            
+            // Clear container
+            container.innerHTML = '';
+            
+            // Add issues to container
+            if (issues.length === 0) {
+                container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">No issues reported yet.</p>';
+                return;
+            }
+            
+            issues.forEach(issue => {
+                const issueCard = document.createElement('div');
+                issueCard.className = 'issue-card';
+                
+                // Format dates
+                const reportedDate = new Date(issue.dateReported).toLocaleDateString();
+                const resolvedDate = issue.dateResolved ? 
+                    new Date(issue.dateResolved).toLocaleDateString() : 'Not resolved yet';
+                
+                // Determine status badge class
+                let statusClass = 'status-pending';
+                if (issue.status === 'in-progress') statusClass = 'status-in-progress';
+                if (issue.status === 'resolved') statusClass = 'status-resolved';
+                
+                // Calculate days since reported
+                const daysSinceReported = Math.floor(
+                    (new Date() - new Date(issue.dateReported)) / (1000 * 60 * 60 * 24)
+                );
+                
+                issueCard.innerHTML = `
+                    <div class="issue-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3>${getIssueTypeLabel(issue.type)}</h3>
+                            <span class="status-badge ${statusClass}">${issue.status.replace('-', ' ')}</span>
+                        </div>
+                        <p><strong>ID:</strong> ${issue.id}</p>
+                        <p><strong>Location:</strong> ${issue.location}</p>
+                        <p><strong>Description:</strong> ${issue.description}</p>
+                        <p><strong>Priority:</strong> ${issue.priority.charAt(0).toUpperCase() + issue.priority.slice(1)}</p>
+                        <p><strong>Reported:</strong> ${reportedDate}</p>
+                        ${issue.status === 'resolved' ? `<p><strong>Resolved:</strong> ${resolvedDate}</p>` : ''}
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <span>${daysSinceReported} day${daysSinceReported !== 1 ? 's' : ''} since reported</span>
+                            </div>
+                        </div>
+                        ${issue.status !== 'resolved' ? `
+                        <div class="action-buttons">
+                            ${issue.status === 'pending' ? 
+                                `<button class="btn btn-primary" onclick="updateIssueStatus('${issue.id}', 'in-progress')">Mark In Progress</button>` : ''}
+                            <button class="btn btn-outline" onclick="updateIssueStatus('${issue.id}', 'resolved')">Mark Resolved</button>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+                
+                container.appendChild(issueCard);
+            });
+        }
+        
+        // Function to load resolved issues data
+        function loadResolvedIssuesData() {
+            const issues = getIssues();
+            const resolvedIssues = issues.filter(issue => issue.status === 'resolved');
+            const container = document.getElementById('resolved-issues-container');
+            
+            // Update statistics
+            const totalResolved = resolvedIssues.length;
+            const thisMonthResolved = resolvedIssues.filter(issue => {
+                const resolvedDate = new Date(issue.dateResolved);
+                const now = new Date();
+                return resolvedDate.getMonth() === now.getMonth() && 
+                       resolvedDate.getFullYear() === now.getFullYear();
+            }).length;
+            
+            // Calculate average resolution time
+            let totalResolutionTime = 0;
+            resolvedIssues.forEach(issue => {
+                const reported = new Date(issue.dateReported);
+                const resolved = new Date(issue.dateResolved);
+                totalResolutionTime += (resolved - reported) / (1000 * 60 * 60 * 24); // Convert to days
+            });
+            const avgResolutionTime = totalResolved > 0 ? 
+                Math.round(totalResolutionTime / totalResolved) : 0;
+            
+            document.getElementById('total-resolved').textContent = totalResolved;
+            document.getElementById('this-month-resolved').textContent = thisMonthResolved;
+            document.getElementById('avg-resolution-time').textContent = avgResolutionTime;
+            
+            // Clear container
+            container.innerHTML = '';
+            
+            // Add resolved issues to container
+            if (resolvedIssues.length === 0) {
+                container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">No resolved issues yet.</p>';
+                return;
+            }
+            
+            resolvedIssues.forEach(issue => {
+                const issueCard = document.createElement('div');
+                issueCard.className = 'issue-card';
+                
+                // Format dates
+                const reportedDate = new Date(issue.dateReported).toLocaleDateString();
+                const resolvedDate = new Date(issue.dateResolved).toLocaleDateString();
+                
+                // Calculate resolution time in days
+                const resolutionTime = Math.floor(
+                    (new Date(issue.dateResolved) - new Date(issue.dateReported)) / (1000 * 60 * 60 * 24)
+                );
+                
+                issueCard.innerHTML = `
+                    <div class="issue-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3>${getIssueTypeLabel(issue.type)}</h3>
+                            <span class="status-badge status-resolved">Resolved</span>
+                        </div>
+                        <p><strong>ID:</strong> ${issue.id}</p>
+                        <p><strong>Location:</strong> ${issue.location}</p>
+                        <p><strong>Description:</strong> ${issue.description}</p>
+                        <p><strong>Priority:</strong> ${issue.priority.charAt(0).toUpperCase() + issue.priority.slice(1)}</p>
+                        <p><strong>Reported:</strong> ${reportedDate}</p>
+                        <p><strong>Resolved:</strong> ${resolvedDate}</p>
+                        <div class="issue-stats">
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <span>Resolved in ${resolutionTime} day${resolutionTime !== 1 ? 's' : ''}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(issueCard);
+            });
+        }
+        
+        // Function to update issue status
+        function updateIssueStatus(issueId, newStatus) {
+            const updates = { status: newStatus };
+            
+            if (newStatus === 'resolved') {
+                updates.dateResolved = new Date().toISOString();
+            }
+            
+            if (updateIssue(issueId, updates)) {
+                showToast(`Issue ${issueId} status updated to ${newStatus.replace('-', ' ')}`);
+                loadTrackProgressData();
+                
+                // If we're on the resolved page, reload that data too
+                if (document.getElementById('resolved').classList.contains('active')) {
+                    loadResolvedIssuesData();
+                }
+            } else {
+                showToast('Error updating issue status', true);
+            }
+        }
+        
+        // Function to show toast notification
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            
+            if (isError) {
+                toast.classList.add('error');
+            } else {
+                toast.classList.remove('error');
+            }
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Function to get issue type label
+        function getIssueTypeLabel(type) {
+            const typeLabels = {
+                'garbage': 'Garbage Dumping',
+                'road': 'Road Damage',
+                'lighting': 'Street Lighting',
+                'water': 'Water Supply Issues',
+                'drainage': 'Drainage Problems',
+                'parks': 'Parks & Green Spaces',
+                'transport': 'Public Transport Issues',
+                'property': 'Public Property Damage',
+                'other': 'Other Issue'
+            };
+            
+            return typeLabels[type] || 'Unknown Issue';
+        }
+        
+        // Function to navigate to complain page with pre-selected issue type
+        function navigateToComplain(issueType) {
+            // Remove active class from all links and sections
+            document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(nav => nav.classList.remove('active'));
+            document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
+            
+            // Add active class to complain link
+            document.querySelector('.nav-link[data-page="complain"]').classList.add('active');
+            document.querySelector('.mobile-nav-link[data-page="complain"]').classList.add('active');
+            
+            // Show complain section
+            document.getElementById('complain').classList.add('active');
+            
+            // Set the issue type in the form
+            document.getElementById('issue-type').value = issueType;
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
     </script>
 </body>
 </html>
